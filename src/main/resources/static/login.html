@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#my_form").submit(function(event){	//submit이 눌러지면, event변수를 받고
+		var member = $("#my_form").serializeArray();
+		var str = $.param(member);			//쿼리스트링이 만들어짐.
+		console.log(str);
+		var url = "/ActionWithData?"+str
+		$("#wrap").load(url);
+	/* $.ajax("/ActionWithData",{data:member,success:function(r){	
+		$("#wrap").html(r);					//r을 wrap에다가 잡아 넣고 싶다.
+	}}); */
+		event.preventDefault();				//기본 event를 제거해준다.
+		
+	});		
+});
+</script>
+
+</head>
+<body>
+	<form id="my_form" action="login.do" method="post">
+		<table>
+			<tr>
+				<td><label for="name">Name</label></td>	<!-- label 코드가 복잡해질때 이거에 대한 설명이야 구분할수 있는 태그 -->
+				<td><input type="text" id="name" name="name"></td>
+			</tr>
+			<tr>
+				<td><label for="age">Age</label></td>
+				<td><input type="text" id="age" name="age"></td>
+			</tr>
+		</table>
+		<input type="submit" value="Get Ajax String">
+	</form>
+	<div id="wrap"></div>
+</body>
+</html>
